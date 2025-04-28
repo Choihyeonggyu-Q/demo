@@ -13,5 +13,6 @@ public class ApiCtrl {
     @GetMapping("/hello")
     public String hello(){
         return "Hello, Siat";
+        
     }
 }
