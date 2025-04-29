@@ -35,6 +35,8 @@ dependencies {
 	// IN-MEMORTY
 	runtimeOnly 'com.h2database:h2'
 
+	// env library
+	implementation 'io.github.cdimascio:dotenv-java:3.0.0'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

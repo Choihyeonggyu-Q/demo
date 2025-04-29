@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedOrigins("http://localhost:3000")
             .allowedMethods("*")
             .allowCredentials(true)
-            .exposedHeaders("Authrization", "Refresh-Token");
+            .exposedHeaders("Authorization", "Refresh-Token");
             
     }
 

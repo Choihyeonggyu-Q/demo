@@ -30,11 +30,9 @@ public class AuthService {
         repository.save(entity);
 
         UserResponseDTO response = UserResponseDTO.builder()
-
-                                        .accessToken(accToken)
-                                        .refreshToken(refToken)
-                                        .build();
-
+                                    .accessToken(accToken)
+                                    .refreshToken(refToken)
+                                    .build();
         return response;
     }
 }
