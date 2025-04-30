@@ -27,7 +27,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date()) // 생성시간
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 20)) // 만료시간
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 )) // 만료시간
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -40,4 +40,14 @@ public class JwtProvider {
                 .signWith(getSigningKey())
                 .compact();
     }
+    public String renewToken(String token){
+        System.out.println("debug >> Jwt provider");
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+    
 }

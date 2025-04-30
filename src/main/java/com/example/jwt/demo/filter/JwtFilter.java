@@ -77,7 +77,7 @@ public class JwtFilter implements Filter{
         System.out.println("debug >> token : "+token);
 
         try{    
-            // Jws 서명
+            // Jws 서명 + 유효기간 체크
             Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -87,7 +87,14 @@ public class JwtFilter implements Filter{
         }catch(Exception e){
             System.out.println("토큰 문제가 발생");
             res.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            res.getWriter().write("invalid ");
+            res.getWriter().write("Invalid or expired token"); 
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+            res.setHeader("Access-Control-Allow-Credentials", "true");
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+
+            chain.doFilter(request, response);
+            return ;
         }
     }
     
