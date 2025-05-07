@@ -66,7 +66,7 @@ public class AuthService {
 
     public String renewService(String token) throws Exception{
         System.out.println("debug >> service renewService");
-        Optional<UserEntity> op = repository.findByToken(token);
+        Optional<UserEntity> op = repository.findByRefreshToken(token);
         if (op.isPresent()) {
             String email = provider.renewToken(op.get().getRefreshToken());
             String newToken = provider.generateAccToken(email);

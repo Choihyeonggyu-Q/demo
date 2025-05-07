@@ -106,7 +106,9 @@ public class JwtFilter implements Filter{
                 path.startsWith("/v3/api-docs") ||
                 path.startsWith("/swagger-resources") ||
                 path.startsWith("/h2-console") ||
-                path.startsWith("/auth") ;
+                path.startsWith("/auth/login") ||
+                path.startsWith("/auth/renew") ||
+                path.startsWith("/user");
 
     }
     
