@@ -102,12 +102,13 @@ public class JwtFilter implements Filter{
 
     // 특정한 URL은 검증없이 CONTROLLER로 넘긴다
     public boolean isPassPath(String path){
-        return  path.startsWith("/swagger-ui") ||
+        return  path.startsWith("/swagger-ui")  ||
                 path.startsWith("/v3/api-docs") ||
                 path.startsWith("/swagger-resources") ||
-                path.startsWith("/h2-console") ||
-                path.startsWith("/auth/login") ||
-                path.startsWith("/auth/renew") ||
+                path.startsWith("/h2-console")  ||
+                path.startsWith("/auth/login")  ||
+                path.startsWith("/auth/renew")  ||
+                path.startsWith("/jpa")         ||
                 path.startsWith("/user");
 
     }

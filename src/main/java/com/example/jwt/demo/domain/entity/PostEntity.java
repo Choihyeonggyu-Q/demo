@@ -1,9 +1,12 @@
 package com.example.jwt.demo.domain.entity;
 
+import com.example.jwt.demo.domain.PostRequestDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +29,20 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //oracle version
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator = "post_seq_gen")
+    @SequenceGenerator( name = "post_seq_gen", 
+                        sequenceName = "post_seq", 
+                        allocationSize = 1)
     private Long    id;
 
     private String title;
     private String content;
+
+    public void updatePost(PostRequestDTO params){
+        this.title = params.getTitle();
+        this.content = params.getContent();
+    }
 }

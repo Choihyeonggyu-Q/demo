@@ -2,6 +2,7 @@ package com.example.jwt.demo.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,6 +45,13 @@ public class MemberEntity {
 
     public void addPost(PostEntity post){
         posts.add(post);
+    }
+
+    public Optional<PostEntity> findPost(Long id){
+        System.out.println("debug >> member entity findPost posts size : "+posts.size());
+        return posts.stream()
+                    .filter(post -> post.getId().equals(id))
+                    .findFirst();
     }
     
 }

@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.lang.reflect.Member;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -51,4 +55,20 @@ public class UserCtrl {
         return ResponseEntity.ok().body(list);
     }
     
+    @PutMapping("/{id}/update")
+    public String updatePost(@PathVariable("id") String email, 
+                                @RequestBody PostRequestDTO params) {
+        System.out.println("debug >> UserCtrl updatePost");
+        service.updatePostService(email, params);
+        return null;
+    }
+
+    @DeleteMapping("/{email}/{postId}")
+    public String deletePost(@PathVariable("email") String email,
+                             @PathVariable("postId") Long postId){
+        System.out.println("debug >> UserCtrl deletePost");
+        service.deletePostService(email, postId);
+        return null;
+    }
+
 }
