@@ -40,4 +40,9 @@ spring:
 # token
 jwt:
     secret: ${JWT_SECRET_KEY}
+
+openApi:
+    serviceKey: ${SERVICE_KEY}
+    callBackUrl: ${CALLBACKURL}
+    dataType: ${TYPE}
         

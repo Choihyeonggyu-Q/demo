@@ -109,6 +109,7 @@ public class JwtFilter implements Filter{
                 path.startsWith("/auth/login")  ||
                 path.startsWith("/auth/renew")  ||
                 path.startsWith("/jpa")         ||
+                path.startsWith("/forcast")     ||
                 path.startsWith("/user");
 
     }
