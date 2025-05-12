@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jwt.demo.openapi.domain.ForcastRequestDTO;
 import com.example.jwt.demo.openapi.domain.ForcastResponseDTO;
+import com.example.jwt.demo.openapi.service.ForcastService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/forcast")
 public class ForcastCtrl {
+
+    @Autowired
+    private ForcastService service;
     
     @Value("${openApi.serviceKey}")
     private String serviceKey;
@@ -35,7 +40,8 @@ public class ForcastCtrl {
     private String dataType;
 
     @GetMapping("/getData")
-    public ResponseEntity<List<ForcastResponseDTO>> getData(@RequestBody ForcastRequestDTO params) {
+    // public ResponseEntity<List<ForcastResponseDTO>> getData(@RequestBody ForcastRequestDTO params) {
+    public ResponseEntity<List<ForcastResponseDTO>> getData(ForcastRequestDTO params) {
         System.out.println("debug >> forcastCtrl getData");
         System.out.println("debug > key : " + serviceKey);
         System.out.println("debug > url : " + callBackUrl);
@@ -47,7 +53,8 @@ public class ForcastCtrl {
                             "?serviceKey="+serviceKey+
                             "&beach_num="+params.getBeach_num()+
                             "&base_date="+params.getBase_date()+
-                            "&base_time="+params.getBase_time();
+                            "&base_time="+params.getBase_time()+
+                            "&dataType="+dataType;
         System.out.println("debug >> : "+requestURL);
         ////////////////////////////////////////////////////////////
         HttpURLConnection http   = null ; 
@@ -66,7 +73,8 @@ public class ForcastCtrl {
                 result = readString(stream) ;
                 System.out.println("result = " + result); 
 		
-                // �쒕퉬�� 援ы쁽 
+                // 서비스 구현
+                list = service.parsingJson(result);
             } else {
 
             }
@@ -77,17 +85,17 @@ public class ForcastCtrl {
         }
 
         /// ////////////////////////////////////////////////////////
-        return null;
+        return ResponseEntity.ok().body(list);
     }
             //////
-        public String readString(InputStream stream) throws IOException {
-            BufferedReader br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-            String input = null  ;
-            StringBuilder result = new StringBuilder();
-            while( (input = br.readLine() ) != null ) {
-                result.append(input+"\n\r");
-            }
-            br.close();   
-            return result.toString() ; 
+    public String readString(InputStream stream) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String input = null  ;
+        StringBuilder result = new StringBuilder();
+        while( (input = br.readLine() ) != null ) {
+            result.append(input+"\n\r");
         }
+        br.close();   
+        return result.toString() ; 
+    }
 }
